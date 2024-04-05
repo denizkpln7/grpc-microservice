@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpccommon";
+option java_outer_classname = "GeneratorProto";
+option objc_class_prefix = "RTG";
+
+package service;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service BookService{
+  rpc getLibraryData(GetData) returns (GetLibrary);
+  rpc getAllLibrary(google.protobuf.Empty) returns (stream GetLibrary);
+  rpc findActiveLibrary(stream  GetLibrary) returns (GetLibrary);
+  rpc findByActiveLibrary(GetData) returns (GetLibrary);
+}
+
+message GetData{
+  int64 id=1;
+}
+
+message GetLibrary{
+  int64 id=1;
+  string name=2;
+}
+
+message CustomError{
+  string errorType=1;
+  string message=2;
+}
